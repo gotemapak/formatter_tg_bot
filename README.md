@@ -1,6 +1,6 @@
 # Telegram Text Formatter Bot
 
-A Telegram bot that helps format text for different platforms (Telegram, LinkedIn) with proper styling and formatting.
+Telegram bot for formatting text with platform-specific styles (Telegram, LinkedIn) - handles headings, lists, and links automatically.
 
 ## Features
 
