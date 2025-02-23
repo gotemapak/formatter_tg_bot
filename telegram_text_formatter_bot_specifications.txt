@@ -1,0 +1,94 @@
+
+# Technical Requirements for Telegram Text Formatter Bot
+
+## 1. Overview
+A Telegram bot designed to format blog post text copied from Notion. The bot offers formatting for two platforms: Telegram and LinkedIn. The user selects the platform, submits their text, and receives a properly formatted post ready for publication.
+
+## 2. Workflow
+1. The user sends a command to the bot to start the process.
+2. The bot offers two formatting options: Telegram or LinkedIn.
+3. The user selects the desired platform.
+4. The bot prompts the user to send the text copied from Notion.
+5. The user pastes the text in the chat.
+6. The bot formats the text according to the chosen platform's style.
+7. The formatted text is returned to the user in the chat for easy copy-pasting.
+
+## 3. Features
+- **Text Formatting:**
+  - Bold, italic, and other formatting adjusted for Telegram and LinkedIn.
+  - Proper list formatting (numbered and bullet points).
+  - URL formatting specific to each platform.
+
+- **Platform-Specific Adjustments:**
+  - For Telegram: Uses Markdown or HTML formatting (`**bold**`, `<b>bold</b>`).
+  - For LinkedIn: Formats text with capitalized headings, spaces, and proper breaks.
+
+## 4. Technical Stack
+- **Programming Language:** Python
+- **Libraries:**
+  - `python-telegram-bot`: For Telegram bot integration.
+  - `re`: Regular expressions for text formatting.
+  - `dotenv`: To manage environment variables securely.
+
+- **Hosting:** 
+  - GitHub Actions for automated execution without server costs.
+  - Runs manually or on a trigger from GitHub’s interface.
+
+## 5. Bot Commands
+- `/start` – Initiates the formatting process.
+- `/format` – Starts the platform selection and text formatting.
+
+## 6. Environment Variables (Secrets for GitHub Actions)
+- `TELEGRAM_TOKEN`: Your Telegram bot token.
+- `TELEGRAM_CHAT_ID`: Your chat ID for sending back formatted messages.
+
+## 7. Example GitHub Actions Workflow
+```
+name: Run Telegram Formatter Bot
+
+on:
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  format-text:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run bot
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python main.py
+```
+
+## 8. Example Bot Interaction
+1. **User:** /start
+2. **Bot:** "Which platform do you want to format text for?"
+    - [Telegram]
+    - [LinkedIn]
+3. **User:** Selects Telegram
+4. **Bot:** "Please send the text you want to format."
+5. **User:** Sends the copied text
+6. **Bot:** Returns formatted text ready for posting
+
+## 9. Estimated Development Time
+- Setting up Telegram Bot: 3 hours
+- Implementing text formatting logic: 5 hours
+- GitHub Actions integration: 3 hours
+- Testing and debugging: 4 hours
+
+## 10. Future Improvements
+- Integrate with Notion API to fetch text directly.
+- Add auto-scheduling options for sending posts.
+- Support for other social media formats.
